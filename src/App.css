@@ -1,38 +1,106 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-color: #fffefb;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  font-family: 'Lato', sans-serif !important;
+  padding-top: 20px;
+}
+
+.title {
+  color: black;
+  font-family: 'Abril Fatface', cursive;
+  text-align: center;
+  max-width: 500px;
+  margin-bottom: 10px;
+}
+
+.alert {
+  max-width: 80%;
+  margin-bottom: 1em !important;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+canvas {
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  border: 1px solid #d9d9d9;
+}
+
+.clear-pad {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.ant-picker {
+  margin-bottom: 10px !important;
+}
+
+.ant-select {
+  width: 100% !important;
+  text-align: left !important;
+}
+
+input {
+  margin-bottom: 10px !important;
+}
+
+.form-error-label {
+  text-align: left;
+  color: #fa343f;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.ant-btn-primary {
+  background-color: black !important;
+  border-color: black !important;
+}
+
+.ant-btn-primary:disabled {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.ant-btn-primary:disabled:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+span.label {
+  color: rgba(0, 0, 0, 0.35);
+  text-align: left;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.footerText {
+  text-align: center;
+  color: black;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.link {
+  font-size: 12px;
+  color: black;
+  text-decoration: underline;
+  margin-bottom: 10px;
+}
+
+.warning {
+  font-style: italic;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
