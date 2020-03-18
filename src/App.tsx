@@ -183,13 +183,13 @@ function App() {
         message={
           <>
             <p>
-              Pas besoin d'imprimer l'attestation de deplacement dérogatoire,{' '}
+              Il faut imprimer l'attestation de déplacement dérogatoire,{' '}
               <a
                 href="https://www.numerama.com/politique/611777-attestation-de-deplacement-que-faire-sans-imprimante-ni-papier.html"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                une version numerique suffit.
+                une version numerique ne suffit pas.
               </a>
             </p>
             <a
