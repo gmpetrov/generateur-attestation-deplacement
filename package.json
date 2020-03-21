@@ -2,6 +2,7 @@
   "name": "attestation-deplacement",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://generer-attestation.fr",
   "dependencies": {
     "@react-pdf/renderer": "^1.6.8",
     "@testing-library/jest-dom": "^4.2.4",
@@ -19,6 +20,7 @@
     "dayjs": "^1.8.23",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "gh-pages": "^2.2.0",
     "pdf-lib": "^1.4.1",
     "ramda": "^0.27.0",
     "react": "^16.13.0",
@@ -34,7 +36,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
