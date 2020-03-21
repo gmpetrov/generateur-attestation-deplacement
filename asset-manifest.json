@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/generateur-attestation-deplacement/static/css/main.a428a356.chunk.css",
+    "main.js": "/generateur-attestation-deplacement/static/js/main.b75b0d38.chunk.js",
+    "main.js.map": "/generateur-attestation-deplacement/static/js/main.b75b0d38.chunk.js.map",
+    "runtime-main.js": "/generateur-attestation-deplacement/static/js/runtime-main.bea71c47.js",
+    "runtime-main.js.map": "/generateur-attestation-deplacement/static/js/runtime-main.bea71c47.js.map",
+    "static/css/2.4b6e3ef2.chunk.css": "/generateur-attestation-deplacement/static/css/2.4b6e3ef2.chunk.css",
+    "static/js/2.9f8cd4c4.chunk.js": "/generateur-attestation-deplacement/static/js/2.9f8cd4c4.chunk.js",
+    "static/js/2.9f8cd4c4.chunk.js.map": "/generateur-attestation-deplacement/static/js/2.9f8cd4c4.chunk.js.map",
+    "index.html": "/generateur-attestation-deplacement/index.html",
+    "precache-manifest.fb60a00958c9eb7d6e794f735693cbb5.js": "/generateur-attestation-deplacement/precache-manifest.fb60a00958c9eb7d6e794f735693cbb5.js",
+    "service-worker.js": "/generateur-attestation-deplacement/service-worker.js",
+    "static/css/2.4b6e3ef2.chunk.css.map": "/generateur-attestation-deplacement/static/css/2.4b6e3ef2.chunk.css.map",
+    "static/css/main.a428a356.chunk.css.map": "/generateur-attestation-deplacement/static/css/main.a428a356.chunk.css.map",
+    "static/js/2.9f8cd4c4.chunk.js.LICENSE.txt": "/generateur-attestation-deplacement/static/js/2.9f8cd4c4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bea71c47.js",
+    "static/css/2.4b6e3ef2.chunk.css",
+    "static/js/2.9f8cd4c4.chunk.js",
+    "static/css/main.a428a356.chunk.css",
+    "static/js/main.b75b0d38.chunk.js"
+  ]
+}
