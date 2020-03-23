@@ -151,23 +151,6 @@ function App() {
         type="info"
         message={
           <>
-            <a
-              href="https://www.getcontentstack.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Besoin de tuer l'ennui ? Découvrez plein de contenus de qualités,
-              sélectionnés à la main par des influenceurs 🎬📖
-            </a>
-          </>
-        }
-      ></Alert>
-
-      <Alert
-        className="alert"
-        type="info"
-        message={
-          <>
             <p>
               Petition pour pouvoir utliser une attestation dématerialisée{' '}
               <a
@@ -180,6 +163,7 @@ function App() {
             </p>
           </>
         }
+        // description={}
       ></Alert>
 
       {/* <Alert
