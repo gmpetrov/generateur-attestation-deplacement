@@ -46,8 +46,8 @@ enum Purpose {
   grocery = 'grocery',
   health = 'health',
   family = 'family',
-  sport = 'sport', 
-  judicial = 'judicial', 
+  sport = 'sport',
+  judicial = 'judicial',
   generalInterest = 'generalInterest'
 }
 
@@ -68,11 +68,11 @@ const PURPOSES = [
   {
     label: 'Déplacements brefs (max 1km) sport individuel',
     value: Purpose.sport
-  }, 
+  },
   {
     label: 'Convocation judiciaire ou administrative',
     value: Purpose.judicial
-  }, 
+  },
   {
     label: "Mission d'interêt général",
     value: Purpose.generalInterest
@@ -213,7 +213,7 @@ function App() {
         )}
 
         <Controller
-          as={<Input placeholder="Nom"/>}
+          as={<Input placeholder="Nom" />}
           control={control}
           name={Fields.name}
         />
@@ -230,9 +230,7 @@ function App() {
           name={Fields.birthDay}
         />
         <Controller
-          as={
-            <Input placeholder="Lieu de naissance" />
-          }
+          as={<Input placeholder="Lieu de naissance" />}
           control={control}
           name={Fields.birthTown}
         />
@@ -346,15 +344,19 @@ const generatePdf = async ({
   const TEXT_SIZE = 10;
   const formattedBirthDay = dayjs(birthDay).format(DATE_FORMAT);
 
-  const bytes = await fetch('template3.pdf').then(res => res.arrayBuffer());
+  const bytes = await fetch('template.pdf').then(res => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(bytes);
 
   const page = pdfDoc.getPages()[0];
 
-  page.drawText(name,                                { x: 122, y: 685, size: TEXT_SIZE });
-  page.drawText(formattedBirthDay,                   { x: 122, y: 661, size: TEXT_SIZE });
-  page.drawText(birthTown,                           { x: 90,  y: 637, size: TEXT_SIZE });
-  page.drawText(`${address} ${postalCode} ${town}`,  { x: 134, y: 613, size: TEXT_SIZE });
+  page.drawText(name, { x: 122, y: 685, size: TEXT_SIZE });
+  page.drawText(formattedBirthDay, { x: 122, y: 661, size: TEXT_SIZE });
+  page.drawText(birthTown, { x: 90, y: 637, size: TEXT_SIZE });
+  page.drawText(`${address} ${postalCode} ${town}`, {
+    x: 134,
+    y: 613,
+    size: TEXT_SIZE
+  });
 
   switch (purpose) {
     case Purpose.pro:
@@ -386,12 +388,16 @@ const generatePdf = async ({
   const minDoc = String(new Date().getMinutes());
   const dayDoc = new Date().getDate();
   const monthDoc = String(new Date().getMonth() + 1).padStart(2, '0');
-  const yearDoc = new Date().getFullYear()
-  
-  page.drawText(`${dayDoc} / ${monthDoc} / ${yearDoc}`,  { x: 93, y: 202, size: TEXT_SIZE });
+  const yearDoc = new Date().getFullYear();
 
-  page.drawText(hourDoc,  { x: 195, y: 202, size: TEXT_SIZE });
-  page.drawText(minDoc,  { x: 224, y: 202, size: TEXT_SIZE });
+  page.drawText(`${dayDoc} / ${monthDoc} / ${yearDoc}`, {
+    x: 93,
+    y: 202,
+    size: TEXT_SIZE
+  });
+
+  page.drawText(hourDoc, { x: 195, y: 202, size: TEXT_SIZE });
+  page.drawText(minDoc, { x: 224, y: 202, size: TEXT_SIZE });
 
   const signatureImg = await pdfDoc.embedPng(signature);
   const signatureDim = signatureImg.scale(1 / (signatureImg.width / 100));
