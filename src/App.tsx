@@ -17,6 +17,7 @@ const DATE_FORMAT = 'DD/MM/YYYY';
 enum Fields {
   name = 'name',
   birthDay = 'birthDay',
+  birthTown = 'birthTown',
   address = 'address',
   town = 'town',
   postalCode = 'postalCode',
@@ -27,6 +28,7 @@ enum Fields {
 const schema = yup.object().shape({
   [Fields.name]: yup.string().required(),
   [Fields.birthDay]: yup.string().required(),
+  [Fields.birthTown]: yup.string().required(),
   [Fields.address]: yup.string().required(),
   [Fields.town]: yup.string().required(),
   [Fields.postalCode]: yup.string().required(),
@@ -44,7 +46,9 @@ enum Purpose {
   grocery = 'grocery',
   health = 'health',
   family = 'family',
-  sport = 'sport'
+  sport = 'sport', 
+  judicial = 'judicial', 
+  generalInterest = 'generalInterest'
 }
 
 const PURPOSES = [
@@ -62,8 +66,16 @@ const PURPOSES = [
     value: Purpose.family
   },
   {
-    label: 'Sport',
+    label: 'Déplacements brefs (max 1km) sport individuel',
     value: Purpose.sport
+  }, 
+  {
+    label: 'Convocation judiciaire ou administrative',
+    value: Purpose.judicial
+  }, 
+  {
+    label: "Mission d'interêt général",
+    value: Purpose.generalInterest
   }
 ];
 
@@ -201,7 +213,7 @@ function App() {
         )}
 
         <Controller
-          as={<Input placeholder="Nom" />}
+          as={<Input placeholder="Nom"/>}
           control={control}
           name={Fields.name}
         />
@@ -217,7 +229,13 @@ function App() {
           control={control}
           name={Fields.birthDay}
         />
-
+        <Controller
+          as={
+            <Input placeholder="Lieu de naissance" />
+          }
+          control={control}
+          name={Fields.birthTown}
+        />
         <Controller
           as={
             <Input placeholder="Adresse" />
@@ -251,7 +269,7 @@ function App() {
         />
 
         <Controller
-          as={<Input placeholder="Ville" />}
+          as={<Input placeholder="Ville" value="Lyon" />}
           control={control}
           name={Fields.town}
         />
@@ -318,6 +336,7 @@ function App() {
 const generatePdf = async ({
   name,
   birthDay,
+  birthTown,
   address,
   town,
   postalCode,
@@ -327,56 +346,59 @@ const generatePdf = async ({
   const TEXT_SIZE = 10;
   const formattedBirthDay = dayjs(birthDay).format(DATE_FORMAT);
 
-  const bytes = await fetch('template.pdf').then(res => res.arrayBuffer());
+  const bytes = await fetch('template3.pdf').then(res => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(bytes);
 
   const page = pdfDoc.getPages()[0];
 
-  page.drawText(name, { x: 135, y: 622, size: TEXT_SIZE });
-  page.drawText(formattedBirthDay, { x: 135, y: 593, size: TEXT_SIZE });
-  page.drawText(address, { x: 135, y: 559, size: TEXT_SIZE });
-  page.drawText(`${postalCode} ${town}`, {
-    x: 135,
-    y: 544,
-    size: TEXT_SIZE
-  });
+  page.drawText(name,                                { x: 122, y: 685, size: TEXT_SIZE });
+  page.drawText(formattedBirthDay,                   { x: 122, y: 661, size: TEXT_SIZE });
+  page.drawText(birthTown,                           { x: 90,  y: 637, size: TEXT_SIZE });
+  page.drawText(`${address} ${postalCode} ${town}`,  { x: 134, y: 613, size: TEXT_SIZE });
 
   switch (purpose) {
     case Purpose.pro:
-      page.drawText('x', { x: 51, y: 425, size: 17 });
+      page.drawText('x', { x: 77, y: 528, size: 17 });
       break;
     case Purpose.grocery:
-      page.drawText('x', { x: 51, y: 350, size: 17 });
+      page.drawText('x', { x: 77, y: 478, size: 17 });
       break;
     case Purpose.health:
-      page.drawText('x', { x: 51, y: 305, size: 17 });
+      page.drawText('x', { x: 77, y: 437, size: 17 });
       break;
     case Purpose.family:
-      page.drawText('x', { x: 51, y: 274, size: 17 });
+      page.drawText('x', { x: 77, y: 401, size: 17 });
       break;
     case Purpose.sport:
-      page.drawText('x', { x: 51, y: 229, size: 17 });
+      page.drawText('x', { x: 77, y: 345, size: 17 });
+      break;
+    case Purpose.judicial:
+      page.drawText('x', { x: 77, y: 298, size: 17 });
+      break;
+    case Purpose.generalInterest:
+      page.drawText('x', { x: 77, y: 262, size: 17 });
       break;
   }
 
-  page.drawText(town, { x: 375, y: 140, size: TEXT_SIZE });
-  page.drawText(String(new Date().getDate()), {
-    x: 478,
-    y: 140,
-    size: TEXT_SIZE
-  });
-  page.drawText(String(new Date().getMonth() + 1).padStart(2, '0'), {
-    x: 502,
-    y: 140,
-    size: 10
-  });
+  page.drawText(town, { x: 109, y: 225, size: TEXT_SIZE });
+
+  const hourDoc = String(new Date().getHours());
+  const minDoc = String(new Date().getMinutes());
+  const dayDoc = new Date().getDate();
+  const monthDoc = String(new Date().getMonth() + 1).padStart(2, '0');
+  const yearDoc = new Date().getFullYear()
+  
+  page.drawText(`${dayDoc} / ${monthDoc} / ${yearDoc}`,  { x: 93, y: 202, size: TEXT_SIZE });
+
+  page.drawText(hourDoc,  { x: 195, y: 202, size: TEXT_SIZE });
+  page.drawText(minDoc,  { x: 224, y: 202, size: TEXT_SIZE });
 
   const signatureImg = await pdfDoc.embedPng(signature);
-  const signatureDim = signatureImg.scale(1 / (signatureImg.width / 150));
+  const signatureDim = signatureImg.scale(1 / (signatureImg.width / 100));
 
   page.drawImage(signatureImg, {
-    x: page.getWidth() - signatureDim.width - 50,
-    y: 30,
+    x: 134, //page.getWidth() - signatureDim.width - 50,
+    y: 131,
     width: signatureDim.width,
     height: signatureDim.height
   });
