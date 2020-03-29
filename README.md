@@ -12,3 +12,8 @@ yarn start
 # build
 yarn build
 ```
+
+---
+
+## Contributeurs 
+- [benjaminathlan](https://github.com/benjaminathlan)
