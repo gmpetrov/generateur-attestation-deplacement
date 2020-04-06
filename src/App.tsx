@@ -22,7 +22,7 @@ enum Fields {
   town = 'town',
   postalCode = 'postalCode',
   purpose = 'purpose',
-  signature = 'signature'
+  signature = 'signature',
 }
 
 const schema = yup.object().shape({
@@ -32,7 +32,7 @@ const schema = yup.object().shape({
   [Fields.address]: yup.string().required(),
   [Fields.town]: yup.string().required(),
   [Fields.postalCode]: yup.string().required(),
-  [Fields.purpose]: yup.string().required()
+  [Fields.purpose]: yup.string().required(),
 });
 
 type FormValues = yup.InferType<typeof schema>;
@@ -48,35 +48,35 @@ enum Purpose {
   family = 'family',
   sport = 'sport',
   judicial = 'judicial',
-  generalInterest = 'generalInterest'
+  generalInterest = 'generalInterest',
 }
 
 const PURPOSES = [
   {
     label: 'Pro',
-    value: Purpose.pro
+    value: Purpose.pro,
   },
   {
     label: 'Achats de première nécessité',
-    value: Purpose.grocery
+    value: Purpose.grocery,
   },
   { label: 'Santé', value: Purpose.health },
   {
     label: 'Famille',
-    value: Purpose.family
+    value: Purpose.family,
   },
   {
     label: 'Déplacements brefs (max 1km) sport individuel',
-    value: Purpose.sport
+    value: Purpose.sport,
   },
   {
     label: 'Convocation judiciaire ou administrative',
-    value: Purpose.judicial
+    value: Purpose.judicial,
   },
   {
     label: "Mission d'interêt général",
-    value: Purpose.generalInterest
-  }
+    value: Purpose.generalInterest,
+  },
 ];
 
 const { Option } = Select;
@@ -87,7 +87,7 @@ function App() {
     undefined
   );
   const { handleSubmit, errors, control } = useForm<FormValues>({
-    validationSchema: schema
+    validationSchema: schema,
   });
 
   const onSubmit = async (values: FormValues) => {
@@ -96,7 +96,7 @@ function App() {
 
     const blob = await generatePdf({
       ...values,
-      signature
+      signature,
     });
 
     downloadBlob(blob, fileName);
@@ -120,7 +120,7 @@ function App() {
     <div className="App">
       <Title className="title">Générateur d'attestation de déplacement</Title>
 
-      <Alert
+      {/* <Alert
         className="alert"
         type="warning"
         message={
@@ -136,10 +136,6 @@ function App() {
                 version papier est acceptée (imprimée ou mansucrite).
               </a>
             </p>
-            {/* 
-            <p>
-              Afin de ne pas vous induire en erreur je désactive le générateur.
-            </p> */}
 
             <br />
 
@@ -155,8 +151,7 @@ function App() {
             </p>
           </>
         }
-        // description={}
-      ></Alert>
+      ></Alert> */}
 
       <Alert
         className="alert"
@@ -164,9 +159,14 @@ function App() {
         message={
           <>
             <p>
-              Petition pour pouvoir utliser une attestation dématerialisée{' '}
+              Il est désormais autorisé d'utiliser une attestation
+              dématerialisée,{' '}
+            </p>
+
+            <p>
+              Vous trouverez le générateur officiel du gouvernement{' '}
               <a
-                href="https://www.change.org/p/emmanuel-macron-pour-d%C3%A9mat%C3%A9rialiser-les-attestations-de-d%C3%A9placement-72e66b58-254e-42ad-9d50-41896a921102"
+                href="https://media.interieur.gouv.fr/deplacement-covid-19/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -178,32 +178,17 @@ function App() {
         // description={}
       ></Alert>
 
-      {/* <Alert
-        className="alert"
-        type="info"
-        message={
-          <>
-            <p>
-              Pas besoin d'imprimer l'attestation de deplacement dérogatoire,{' '}
-              <a
-                href="https://www.numerama.com/politique/611777-attestation-de-deplacement-que-faire-sans-imprimante-ni-papier.html"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                une version numerique suffit.
-              </a>
-            </p>
-            <a
-              href="https://www.interieur.gouv.fr/Actualites/L-actu-du-Ministere/Attestation-de-deplacement-derogatoire-et-justificatif-de-deplacement-professionnel"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Plus d'informations sur le site officiel du gouvernement.
-            </a>
-          </>
-        }
-        // description={}
-      ></Alert> */}
+      <a
+        className="bmc-button"
+        target="_blank"
+        href="https://www.buymeacoffee.com/georges"
+      >
+        <img
+          src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+          alt="Buy me a coffee"
+        />
+        <span>Buy me a coffee</span>
+      </a>
 
       <form className="Form" onSubmit={handleSubmit(onSubmit)}>
         {Object.keys(errors).length > 0 && (
@@ -339,12 +324,12 @@ const generatePdf = async ({
   town,
   postalCode,
   purpose,
-  signature
+  signature,
 }: GenPDFprops) => {
   const TEXT_SIZE = 10;
   const formattedBirthDay = dayjs(birthDay).format(DATE_FORMAT);
 
-  const bytes = await fetch('template.pdf').then(res => res.arrayBuffer());
+  const bytes = await fetch('template.pdf').then((res) => res.arrayBuffer());
   const pdfDoc = await PDFDocument.load(bytes);
 
   const page = pdfDoc.getPages()[0];
@@ -355,7 +340,7 @@ const generatePdf = async ({
   page.drawText(`${address} ${postalCode} ${town}`, {
     x: 134,
     y: 613,
-    size: TEXT_SIZE
+    size: TEXT_SIZE,
   });
 
   switch (purpose) {
@@ -393,7 +378,7 @@ const generatePdf = async ({
   page.drawText(`${dayDoc} / ${monthDoc} / ${yearDoc}`, {
     x: 93,
     y: 202,
-    size: TEXT_SIZE
+    size: TEXT_SIZE,
   });
 
   page.drawText(hourDoc, { x: 195, y: 202, size: TEXT_SIZE });
@@ -406,7 +391,7 @@ const generatePdf = async ({
     x: 134, //page.getWidth() - signatureDim.width - 50,
     y: 131,
     width: signatureDim.width,
-    height: signatureDim.height
+    height: signatureDim.height,
   });
 
   const pdfBytes = await pdfDoc.save();
